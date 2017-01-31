@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-get "sign_in" => "authentication#login"
-get "new_user" => "authentication#signup"
-post "sign_in" => "authentication#login"
-post "new_user" => "authentication#register"
+match ':controller(/:action(:/id))', :via => :get
 root "authentication#signup"
 
   # The priority is based upon order of creation: first created -> highest priority.

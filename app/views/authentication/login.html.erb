@@ -1,5 +1,5 @@
 <p>Login</p>
-<%= form_for @user, :as => :user, :url => sign_in_path(@user) do |f| %>
+<%= form_for @user, controller: 'authentication', action: 'sign_in' %>
   <p>
     <%= f.label 'email:' %><br />
     <%= f.text_field :email %>

@@ -4,15 +4,15 @@ class AuthenticationController < ApplicationController
   end
 
   def login
-    username_or_email = params[:user][:username]
+    name_or_email = params[:user][:name]
     password = params[:user][:password]
 
-    if username_or_email.rindex('@')
-      email=username_or_email
+    if name_or_email.rindex('@')
+      email=name_or_email
       user = User.authenticate_by_email(email, password)
     else
-      username=username_or_email
-      user = User.authenticate_by_username(username, password)
+      name=name_or_email
+      user = User.authenticate_by_username(name, password)
     end
 
     if user
