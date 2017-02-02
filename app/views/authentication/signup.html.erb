@@ -1,5 +1,5 @@
 <p>Sign Up</p>
-<%= form_for @user, controller: 'authentication', action: 'new_user' %>
+<%= form_for @user, url: {controller: 'authentication', action: 'signup'} do |f| %>
   <p>
     <%= f.label 'name:' %><br/>
     <%= f.text_field :name %>
@@ -17,3 +17,6 @@
     <%= f.submit 'Clear Form', :type => 'reset' %>
   </p>
 <% end %>
+<%= link_to "Home", controller: 'static_pages', action: 'home' %> |
+<%= link_to "Contact", controller: 'static_pages', action: 'contact' %> |
+<%= link_to "Login", controller: 'authentication', action: 'login' %> 

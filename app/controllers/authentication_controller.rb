@@ -1,42 +1,33 @@
 class AuthenticationController < ApplicationController
-  def sign_in
+  def signup
     @user = User.new
   end
 
   def login
-    name_or_email = params[:user][:name]
-    password = params[:user][:password]
+    if request.get?
+      puts "\n\n ^^^^ It's a get request. \n\n"
+      @user = User.new
+      
+    elsif request.post?
+      puts "\n\n ^^^^ It's a post request. \n\n"
+      name_or_email = params[:user][:name]
+      password = params[:user][:password]
 
-    if name_or_email.rindex('@')
-      email=name_or_email
-      user = User.authenticate_by_email(email, password)
-    else
-      name=name_or_email
-      user = User.authenticate_by_username(name, password)
-    end
+      if name_or_email.rindex('@')
+        email=name_or_email
+        user = User.authenticate_by_email(email, password)
+      else
+        name=name_or_email
+        user = User.authenticate_by_username(name, password)
+      end
 
-    if user
-      redirect_to :root
-    else
-      render :action => "login"
-    end
-  end
-  
-  def new_user
-  @user = User.new
-  end
-
-  def register
-  @user = User.new(params[:user])
-
-  if @user.valid?
-    @user.save
-    session[:user_id] = @user.id
-    flash[:notice] = 'Welcome.'
-    redirect_to :root
-  else
-    render :action => "signup"
-  end
-  end
-  
+      if user
+        redirect_to :action => "signup"
+      else
+        render :action => "login"
+      end
+   end   
 end
+end
+
+ 
