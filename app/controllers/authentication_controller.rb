@@ -1,6 +1,15 @@
 class AuthenticationController < ApplicationController
   def signup
-    @user = User.new
+    #@user = User.new
+    if request.get?
+      puts "\n\n ^^^^ It's a get request. \n\n"
+      @user = User.new
+      
+    elsif request.post?
+      puts "\n\n ^^^^ It's a post request. \n\n"
+      name_or_email = params[:user][:name]
+      password = params[:user][:password]
+    end
   end
 
   def login
@@ -15,10 +24,10 @@ class AuthenticationController < ApplicationController
 
       if name_or_email.rindex('@')
         email=name_or_email
-        user = User.authenticate_by_email(email, password)
+        user = User.authenticate(email, password)
       else
         name=name_or_email
-        user = User.authenticate_by_username(name, password)
+        user = User.authenticate(name, password)
       end
 
       if user
