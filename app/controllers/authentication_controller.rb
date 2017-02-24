@@ -1,14 +1,19 @@
 class AuthenticationController < ApplicationController
   def signup
-    #@user = User.new
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
       @user = User.new
       
-    elsif request.post?
-      puts "\n\n ^^^^ It's a post request. \n\n"
-      name_or_email = params[:user][:name]
-      password = params[:user][:password]
+    else 
+      puts "\n\n ^^^^ It's a post request. The params are: #{params.inspect} \n\n"
+      @user = User.signup(params[:user]) || User.new
+      if @user and @user.valid?
+        session[:user_id] = @user.id
+        flash[:notice] = 'Welcome!'
+        # TODO - we will redirect to a logged in page
+      else
+        render action: 'signup'
+      end
     end
   end
 
@@ -19,21 +24,12 @@ class AuthenticationController < ApplicationController
       
     elsif request.post?
       puts "\n\n ^^^^ It's a post request. \n\n"
-      name_or_email = params[:user][:name]
-      password = params[:user][:password]
+      @user = User.authenticate(params[:user])
 
-      if name_or_email.rindex('@')
-        email=name_or_email
-        user = User.authenticate(email, password)
+      if @user
+        # TODO - we will redirect 
       else
-        name=name_or_email
-        user = User.authenticate(name, password)
-      end
-
-      if user
-        redirect_to :action => "signup"
-      else
-        render :action => "login"
+        render action: 'login'
       end
    end   
 end
