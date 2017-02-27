@@ -31,8 +31,9 @@ class AuthenticationController < ApplicationController
       else
         render action: 'login'
       end
-   end   
-end
+    end   
+  end
+  
 end
 
  
