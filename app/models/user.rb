@@ -2,10 +2,10 @@ class User < ActiveRecord::Base
   validates :name, presence: { message: "Name name is required" }
   validates :email, presence: { message: "Email name is required" },
                     uniqueness: { case_sensitive: false, message: "This email is already registered" }
-  validates :password, presence: { message: "Password name is required" }
+  validates :password, presence: { message: "Password name required" }
 
   # TODO - we will add later a check to make sure an email can only register once
-
+  
   def self.signup(params)
   	puts "\n\n ^^^^ We will signup the user with: Name: #{params[:name]}; email: #{params[:email]} and password: #{params[:password]} \n\n"
   	user = User.new(name: params[:name], email: params[:email], password: params[:password])
