@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :name, presence: { message: "Name name is required" }
   validates :email, presence: { message: "Email name is required" },
                     uniqueness: { case_sensitive: false, message: "This email is already registered" }
-  validates :password, presence: { message: "Name name is required" }
+  validates :password, presence: { message: "Password name is required" }
 
   # TODO - we will add later a check to make sure an email can only register once
 
