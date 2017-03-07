@@ -3,8 +3,14 @@ class User < ActiveRecord::Base
   validates :email, presence: { message: "Email name is required" },
                     uniqueness: { case_sensitive: false, message: "This email is already registered" }
   validates :password, presence: { message: "Password name required" }
-
+  before_save :encrypt_password  
+  
   # TODO - we will add later a check to make sure an email can only register once
+  
+  def encrypt_password
+    require 'digest/sha1'
+    self.hash_password= Digest::SHA1.hexdigest(password)
+  end 
   
   def self.signup(params)
   	puts "\n\n ^^^^ We will signup the user with: Name: #{params[:name]}; email: #{params[:email]} and password: #{params[:password]} \n\n"

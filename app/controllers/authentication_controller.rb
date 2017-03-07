@@ -1,4 +1,6 @@
 class AuthenticationController < ApplicationController
+  
+
   def signup
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
