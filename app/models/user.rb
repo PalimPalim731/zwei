@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  require 'digest/sha1'
   validates :name, presence: { message: "Name name is required" }
   validates :email, presence: { message: "Email name is required" },
                     uniqueness: { case_sensitive: false, message: "This email is already registered" }
@@ -8,7 +9,6 @@ class User < ActiveRecord::Base
   # TODO - we will add later a check to make sure an email can only register once
   
   def encrypt_password
-    require 'digest/sha1'
     self.hash_password= Digest::SHA1.hexdigest(password)
   end 
   
