@@ -29,13 +29,17 @@ class AuthenticationController < ApplicationController
       @user = User.authenticate(params[:user])
 
       if @user
-        # TODO - we will redirect 
+        session[:user_id] = @user.id 
       else
         render action: 'login'
       end
     end   
   end
   
+  def logout
+    session[:user_id] = nil
+    redirect_to :login
+  end
 end
 
  
