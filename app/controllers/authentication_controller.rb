@@ -1,20 +1,25 @@
 class AuthenticationController < ApplicationController
   
-
+  def signed_up
+  end
+  
+  def logged_in
+  end  
+  
   def signup
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
       @user = User.new
-      
     else 
       puts "\n\n ^^^^ It's a post request. The params are: #{params.inspect} \n\n"
       @user = User.signup(params[:user]) || User.new
       if @user and @user.valid?
         session[:user_id] = @user.id
         flash[:notice] = 'Welcome!'
-        # TODO - we will redirect to a logged in page
+        #render action: 'signed_up'    <---This is how I wanted to do it
       else
-        render action: 'signup'
+        #render action: 'signup' <---This is how I wanted to do it
+        render action: 'signed_up'
       end
     end
   end
@@ -30,6 +35,7 @@ class AuthenticationController < ApplicationController
 
       if @user
         session[:user_id] = @user.id 
+        render action: 'logged_in'
       else
         render action: 'login'
       end
