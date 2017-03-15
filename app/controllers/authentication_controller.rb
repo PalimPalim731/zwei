@@ -1,9 +1,11 @@
 class AuthenticationController < ApplicationController
   
   def signed_up
+    @user = User.find(params[:id])
   end
   
   def logged_in
+    @user = User.find(params[:id])
   end  
   
   def signup
@@ -13,12 +15,11 @@ class AuthenticationController < ApplicationController
     else 
       puts "\n\n ^^^^ It's a post request. The params are: #{params.inspect} \n\n"
       @user = User.signup(params[:user]) || User.new
-      if @user and @user.valid?
+      if @user and @user.valid? and @user.save
         session[:user_id] = @user.id
         flash[:notice] = 'Welcome!'
-        #render action: 'signed_up'    <---This is how I wanted to do it
+        redirect_to action: 'signed_up' 
       else
-        #render action: 'signup' <---This is how I wanted to do it
         render action: 'signed_up'
       end
     end
