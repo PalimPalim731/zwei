@@ -1,13 +1,5 @@
 class AuthenticationController < ApplicationController
-  
-  def signed_up
-    @user = User.find(params[:id])
-  end
-  
-  def logged_in
-    @user = User.find(params[:id])
-  end  
-  
+    
   def signup
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
@@ -15,12 +7,10 @@ class AuthenticationController < ApplicationController
     else 
       puts "\n\n ^^^^ It's a post request. The params are: #{params.inspect} \n\n"
       @user = User.signup(params[:user]) || User.new
-      if @user and @user.valid? and @user.save
+      if @user and @user.valid?
         session[:user_id] = @user.id
         flash[:notice] = 'Welcome!'
-        redirect_to action: 'signed_up' 
-      else
-        render action: 'signed_up'
+        redirect_to action: 'logged_in' 
       end
     end
   end
@@ -36,11 +26,23 @@ class AuthenticationController < ApplicationController
 
       if @user
         session[:user_id] = @user.id 
-        render action: 'logged_in'
+        redirect_to action: 'logged_in' 
       else
-        render action: 'login'
+        render 'login'
       end
     end   
+  end
+  
+  def logged_in
+    if @logged_user.nil?
+      @logged_user = User.find_by(id: session[:user_id])
+    else
+      @logged_user
+    end
+  end  
+  
+  def logged_user
+    @logged_user ||= User.find_by(id: session[:user_id])
   end
   
   def logout
