@@ -10,7 +10,7 @@ class AuthenticationController < ApplicationController
       if @user and @user.valid?
         session[:user_id] = @user.id
         flash[:notice] = 'Welcome!'
-        redirect_to action: 'logged_in' 
+        redirect_to action: 'logged_in'
       end
     end
   end
@@ -39,7 +39,8 @@ class AuthenticationController < ApplicationController
     else
       @logged_user
     end
-  end  
+  end 
+  
   
   def logged_user
     @logged_user ||= User.find_by(id: session[:user_id])
