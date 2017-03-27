@@ -1,4 +1,4 @@
-<p>You're logged in!</p>
+<p>Hey <%= current_user.name %>! You're logged in. <%= link_to "Logout", logout_url %></p> 
 <%= link_to "Home",   controller: 'static_pages',  action: 'home' %> |
 <%= link_to "Contact",controller: 'static_pages',  action: 'contact' %> |
 <%= link_to "Login",  controller: 'authentication',action: 'login' %> |

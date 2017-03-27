@@ -1,5 +1,7 @@
 class AuthenticationController < ApplicationController
-    
+  
+  before_action :require_login, except: [:signup, :login]
+     
   def signup
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
@@ -16,36 +18,29 @@ class AuthenticationController < ApplicationController
   end
 
   def login
+    puts "\n\n ^^^^ The params are: #{params.inspect} \n\n"
+    
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
       @user = User.new
-      
     elsif request.post?
       puts "\n\n ^^^^ It's a post request. \n\n"
       @user = User.authenticate(params[:user])
 
-      if @user
-        session[:user_id] = @user.id 
-        redirect_to action: 'logged_in' 
+      if @user 
+        session[:user_id] = @user.id
+        redirect_to action: 'logged_in'
       else
-        render 'login'
+        @user = User.new
+        render action: 'login'
       end
-    end   
+    end
   end
+
   
   def logged_in
-    if @logged_user.nil?
-      @logged_user = User.find_by(id: session[:user_id])
-    else
-      @logged_user
-    end
   end 
-  
-  
-  def logged_user
-    @logged_user ||= User.find_by(id: session[:user_id])
-  end
-  
+    
   def logout
     session[:user_id] = nil
     redirect_to :login

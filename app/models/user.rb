@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     end
     
     puts "\n\n ^^^^ We have not found the requested user, we'll just return a blank user \n\n"
-    self.new
+    nil
   end
   
   private
