@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
     @current_user ||= session[:user_id] ? User.find_by_id(session[:user_id]) : nil
   end
   
+  
+  
   private
   
   def require_login
@@ -20,5 +22,12 @@ class ApplicationController < ActionController::Base
     end
   end
    
-    
+  def writesomestuffbefore
+    puts "\n\n ^^^^ Before action #{params[:action]} \n\n"    
+  end
+  
+  def writesomestuffafter
+    puts "\n\n ^^^^ After action #{params[:action]} \n\n"  
+  end
+  
 end

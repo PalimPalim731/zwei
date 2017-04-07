@@ -1,7 +1,10 @@
 class AuthenticationController < ApplicationController
   
   before_action :require_login, except: [:signup, :login]
-     
+  before_action :writesomestuffbefore
+  after_action :writesomestuffafter
+  
+   
   def signup
     if request.get?
       puts "\n\n ^^^^ It's a get request. \n\n"
