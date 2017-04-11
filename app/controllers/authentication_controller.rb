@@ -1,8 +1,8 @@
 class AuthenticationController < ApplicationController
   
   before_action :require_login, except: [:signup, :login]
-  before_action :writesomestuffbefore
-  after_action :writesomestuffafter
+  before_action :put_before_action 
+  after_action :put_after_action 
   
    
   def signup
@@ -48,6 +48,17 @@ class AuthenticationController < ApplicationController
     session[:user_id] = nil
     redirect_to :login
   end
+  
+  private
+  
+  def put_before_action
+    puts "\n\n ^^^^ Before action #{params[:action]} \n\n"
+  end
+  
+  def put_after_action
+    puts "\n\n ^^^^ After action #{params[:action]} \n\n"
+  end  
+  
 end
 
  

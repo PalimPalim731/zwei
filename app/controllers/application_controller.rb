@@ -22,12 +22,6 @@ class ApplicationController < ActionController::Base
     end
   end
    
-  def writesomestuffbefore
-    puts "\n\n ^^^^ Before action #{params[:action]} \n\n"    
-  end
   
-  def writesomestuffafter
-    puts "\n\n ^^^^ After action #{params[:action]} \n\n"  
-  end
   
 end
